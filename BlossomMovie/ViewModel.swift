@@ -24,6 +24,8 @@ class ViewModel {
     
     func getTitles() async {
         homeStatus = .fetching
+        if trendingMovies.isEmpty {
+            
         
         do {
             async let tMovies = dataFetcher.fetchTitles(for: "movie", by: "trending")
@@ -39,6 +41,9 @@ class ViewModel {
         } catch {
             print(error)
             homeStatus = .failed(underlyingError: error)
+        }
+        } else {
+            homeStatus = .success
         }
     }
 }
